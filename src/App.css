@@ -1,0 +1,24 @@
+.movieWrapper {
+    display: grid;
+    grid-template-columns: 18%;
+    grid-auto-flow: column;
+    gap: 1.5rem;
+    padding: 1rem;
+    overflow-y: scroll;
+    scroll-snap-type: x mandatory;
+    /* >div{
+        scroll-snap-align: center;
+    } */
+}
+.movieWrapper::-webkit-scrollbar{
+    display: none;
+}
+.movieBOx{
+    height: 400px;
+    margin-bottom: 10px;
+}
+.nameimg{
+    width: 200px;
+    height: 300px;
+    border-radius: 20px;
+}
