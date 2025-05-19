@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 function row({ urls, heading, btn1, btn2 }) {
   const [movieData, setMovieData] = useState([]); 
   const [selectedUrl, setSelectedUrl] = useState(urls[0]); 
-  const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+  const [activeButton , setActive] = useState([0])
+  const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original";
 
  
   useEffect(() => {
@@ -21,19 +22,30 @@ function row({ urls, heading, btn1, btn2 }) {
     fetchMovies();  
   }, [selectedUrl]); 
 
+  function trimContent(content) {
+    if (content.length > 20) {
+      return content.slice(0, 15) + "...";
+    }
+  }
+
+  const handleClick =(i)=>{
+    setActive(i);
+    setSelectedUrl(urls[i])
+  }
+  
   return (
-    <section className="p-4">
-      <header className="mb-4">
+    <section>
+      <header className="header">
         <h2 >{heading}</h2>
         <div >
           <button
-            onClick={() => setSelectedUrl(urls[0])}
+            onClick={() => handleClick(0)}
             
           >
             {btn1}
           </button>
           <button
-            onClick={() => setSelectedUrl(urls[1])}>
+            onClick={() => handleClick(1)}>
             {btn2}
           </button>
         </div>
@@ -51,6 +63,19 @@ function row({ urls, heading, btn1, btn2 }) {
            className="nameimg"
           />
         )}
+        <div className="content">
+          <h3>{trimContent(movie.title || movie.name)}</h3>
+          <p>
+           {movie.release_date
+           ? new Date(movie.release_date).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "2-digit",
+            })
+            : ""}
+           </p>
+
+        </div>
       </div>
     ))
   ) : (
